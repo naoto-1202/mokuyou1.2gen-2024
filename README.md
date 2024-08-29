@@ -2,15 +2,19 @@
 入れたら、screenを起動し、タブを二つ以上用意する。
 docker compose up を入力する。(dockerが立ち上がる)
 cmpose up を入力したタブ以外のところでdocker compose exec mysql mysql techcと入力しmysqlを立ち上げる
-mysqlで　CREATE TABLE `bbs_entries` (
+mysqlで
+```
+CREATE TABLE `bbs_entries` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `body` TEXT NOT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `image_filename` TEXT DEFAULT NULL
 );
+```
 と入力してテーブルを作成
 今度はdockertestの中にpublic,nginx,Dockerfileを作成する
 まずは、vim Dockerfile と入力してDockerfileの中身を書いていく
+```
 FROM php:8.3-fpm-alpine AS php
 
 RUN docker-php-ext-install pdo_mysql
@@ -18,9 +22,10 @@ RUN docker-php-ext-install pdo_mysql
 RUN install -o www-data -g www-data -d /var/www/upload/image/
 
 RUN echo -e "post_max_size = 5M\nupload_,ax_filesize = 5M" >> ${PHP_INI_DIR}/php.ini
-
+```
 と入力する
 次にcd nginx と入力し、その中にdefault.confを作成する
+```
 server {
     listen       0.0.0.0:80;
     server_name  _;
@@ -40,8 +45,10 @@ server {
         root /var/www/upload;
     }
 }
+```
 と入力する
 最後にpublicに移動してbbsimagetest.phpを作成する
+```
 <?php
 $dbh = new PDO('mysql:host=mysql;dbname=techc', 'root', '');
 
@@ -116,5 +123,6 @@ $select_sth->execute();
     </dd>
   </dl>
 <?php endforeach ?>
+```
 と入力する
 以上で掲示板を作成できる
