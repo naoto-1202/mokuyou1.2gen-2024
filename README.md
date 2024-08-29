@@ -7,9 +7,10 @@ mysqlで
 CREATE TABLE `bbs_entries` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `body` TEXT NOT NULL,
-    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    `image_filename` TEXT DEFAULT NULL
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE `bbs_entries` ADD COLUMN image_filename TEXT DEFAULT NULL;
 ```
 と入力してテーブルを作成
 今度はdockertestの中にpublic,nginx,Dockerfileを作成する
